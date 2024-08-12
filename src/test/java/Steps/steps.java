@@ -18,7 +18,7 @@ public class steps {
 
 	WebDriver driver;
 
-	WebElement assert1;
+	String assert1;
 
 	@Given("User Enters the Browser and Enter Ebay Url")
 	public void user_enters_the_browser_and_enter_ebay_url() {
@@ -57,7 +57,7 @@ public class steps {
 	}
 
 	@When("User Clicks on Using Advanced Search options button and In new page verifies the Customer Service and Comeback to the main page")
-	public void user_clicks_on_using_advanced_search_options_button() {
+	public void user_clicks_on_using_advanced_search_options_button() throws InterruptedException {
 
 		driver.findElement(By.cssSelector("[href='/help/buying/search-tips/advanced-search?id=4049']")).click();
 
@@ -71,15 +71,18 @@ public class steps {
 
 				driver.switchTo().window(One);
 
-				assert1 = driver.findElement(By.xpath("//span[.='Contact us']"));
+				assert1 = driver.findElement(By.xpath("//span[.='Contact us']")).getText();
 
 				Assert.assertEquals(assert1, "Contact us");
+
+				Thread.sleep(2000);
+
+				driver.close();
 			}
 
 		}
 
-		driver.navigate().to("https://www.ebay.com/sch/ebayadvsearch?_sofindtype=5");
-
+		driver.switchTo().window(Parent);
 	}
 
 	@When("Select the checkboxes and Clicks on Search button")
@@ -103,7 +106,7 @@ public class steps {
 
 		driver.findElement(By.cssSelector("[name='LH_FR']")).click();
 
-		driver.findElement(By.cssSelector("name='LH_RPA']")).click();
+		driver.findElement(By.cssSelector("[name='LH_RPA']")).click();
 
 		driver.findElement(By.cssSelector("[name='LH_AS']")).click();
 
@@ -117,11 +120,11 @@ public class steps {
 
 		driver.findElement(By.cssSelector("[aria-label='Enter maximum number of bids']")).sendKeys("100");
 
-		driver.findElement(By.cssSelector("aria-label='Enter minimum quantity']")).sendKeys("10");
+		driver.findElement(By.cssSelector("[aria-label='Enter minimum quantity']")).sendKeys("10");
 
-		driver.findElement(By.cssSelector("aria-label=['Enter Maximum Quantity']")).sendKeys("20");
+		driver.findElement(By.cssSelector("[aria-label='Enter Maximum Quantity']")).sendKeys("20");
 
-		driver.findElement(By.cssSelector("(//*[@value='LH_PrefLoc'])[2]")).click();
+		driver.findElement(By.xpath("(//*[@value='LH_PrefLoc'])[2]")).click();
 
 		driver.findElement(By.cssSelector("[aria-label='Seller ID']")).sendKeys("Ambani");
 
@@ -137,13 +140,13 @@ public class steps {
 
 		viewSelect.selectByValue("1");
 
-		WebElement rpp = driver.findElement(By.cssSelector("aria-label='Results Per Page']"));
+		WebElement rpp = driver.findElement(By.cssSelector("[aria-label='Results Per Page']"));
 
 		Select pageSelect = new Select(rpp);
 
 		pageSelect.selectByValue("120");
 
-		driver.findElement(By.cssSelector("(//*[@class='btn btn--primary'])[2]")).click();
+		driver.findElement(By.xpath("(//*[@class='btn btn--primary'])[2]")).click();
 
 	}
 
